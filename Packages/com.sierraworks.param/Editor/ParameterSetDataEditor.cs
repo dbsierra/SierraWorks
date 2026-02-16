@@ -176,12 +176,12 @@ namespace SierraWorks.PARAM.Editor
 
         private void DrawGroupsPanel()
         {
-            EditorGUILayout.BeginVertical(GUILayout.Width(115));
+            float width = 115f;
 
-            EditorGUILayout.LabelField("Groups", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical(GUILayout.Width(width));
 
             groupScrollPosition = EditorGUILayout.BeginScrollView(groupScrollPosition,
-                EditorStyles.helpBox, GUILayout.Height(600), GUILayout.Width(115));
+                EditorStyles.helpBox, GUILayout.Height(600), GUILayout.Width(width));
 
             var groups = data.groups;
             groupDropTargetIndex = -1;
@@ -253,8 +253,8 @@ namespace SierraWorks.PARAM.Editor
             EditorGUILayout.Space(5);
 
             // Add new group
-            EditorGUILayout.BeginHorizontal(GUILayout.Width(150));
-            newGroupName = EditorGUILayout.TextField(newGroupName, GUILayout.Width(115));
+            EditorGUILayout.BeginHorizontal();
+            newGroupName = EditorGUILayout.TextField(newGroupName, GUILayout.Width(width - 30.0f));
 
             GUI.enabled = !string.IsNullOrEmpty(newGroupName) &&
                           !groups.Any(g => g.groupName == newGroupName);
@@ -273,7 +273,7 @@ namespace SierraWorks.PARAM.Editor
             GUI.enabled = selectedGroupIndex >= 0 && selectedGroupIndex < groups.Count &&
                           groups.Count > 1;
 
-            if (GUILayout.Button("Remove Group", GUILayout.Width(150)))
+            if (GUILayout.Button("Remove Group", GUILayout.Width(width)))
             {
                 string groupToRemove = groups[selectedGroupIndex].groupName;
                 if (EditorUtility.DisplayDialog("Remove Group",
