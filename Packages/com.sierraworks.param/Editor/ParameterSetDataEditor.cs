@@ -318,7 +318,7 @@ namespace SierraWorks.PARAM.Editor
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Group Name:", EditorStyles.boldLabel, GUILayout.Width(85));
             EditorGUI.BeginChangeCheck();
-            string newGroupName = EditorGUILayout.TextField(selectedGroup.groupName);
+            string newGroupName = EditorGUILayout.TextField(selectedGroup.groupName, GUILayout.ExpandWidth(true));
             if (EditorGUI.EndChangeCheck() && !string.IsNullOrEmpty(newGroupName) && newGroupName != selectedGroup.groupName)
             {
                 // Check for duplicate names
@@ -387,7 +387,7 @@ namespace SierraWorks.PARAM.Editor
             EditorGUI.LabelField(dragRect, "≡");
             HandleParameterDrag(dragRect, param);
 
-            EditorGUILayout.LabelField(param.displayName, EditorStyles.boldLabel, GUILayout.Width(150));
+            EditorGUILayout.LabelField(param.displayName, EditorStyles.boldLabel, GUILayout.ExpandWidth(true));
 
             if (GUILayout.Button("×", GUILayout.Width(20)))
             {
@@ -411,7 +411,7 @@ namespace SierraWorks.PARAM.Editor
 
             // Default value for current preset
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Default Value:", GUILayout.Width(100));
+            EditorGUILayout.LabelField("Default Value", GUILayout.Width(100));
             DrawDefaultValueField(param);
             EditorGUILayout.EndHorizontal();
 
