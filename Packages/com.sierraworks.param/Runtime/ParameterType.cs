@@ -1,6 +1,6 @@
 using System;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     [Serializable]
     public enum ParameterType

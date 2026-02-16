@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     /// <summary>
     /// Example script showing how to use ParameterHub from code.

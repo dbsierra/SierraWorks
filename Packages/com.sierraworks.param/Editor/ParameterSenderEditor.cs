@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 
-namespace SierraWorks.Parameter.Editor
+namespace SierraWorks.PARAM.Editor
 {
     [CustomEditor(typeof(ParameterSender))]
     public class ParameterSenderEditor : UnityEditor.Editor

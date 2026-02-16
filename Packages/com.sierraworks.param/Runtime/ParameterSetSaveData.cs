@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     [Serializable]
     public class ParameterSetSaveData

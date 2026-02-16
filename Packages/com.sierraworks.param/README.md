@@ -183,7 +183,7 @@ Now your slider controls the light intensity through the parameter system!
 Access parameters from your own scripts:
 
 ```csharp
-using SierraWorks.Parameter;
+using SierraWorks.PARAM;
 
 public class MyScript : MonoBehaviour
 {
@@ -214,12 +214,12 @@ public class MyScript : MonoBehaviour
 ## Package Structure
 
 ```
-Packages/com.SierraWorks.Parameter/
+Packages/com.SierraWorks.PARAM/
 ├── package.json
 ├── README.md
 ├── QUICKSTART.md
 ├── Runtime/
-│   ├── SierraWorks.Parameter.Runtime.asmdef
+│   ├── SierraWorks.PARAM.Runtime.asmdef
 │   ├── ParameterType.cs
 │   ├── Parameter.cs
 │   ├── ParameterGroup.cs
@@ -233,11 +233,11 @@ Packages/com.SierraWorks.Parameter/
 │   ├── ParameterSetSerializer.cs
 │   └── ParameterSetExample.cs
 └── Editor/
-    ├── SierraWorks.Parameter.Editor.asmdef
+    ├── SierraWorks.PARAM.Editor.asmdef
     ├── ParameterSetDataEditor.cs
     ├── ParameterSenderEditor.cs
     ├── ParameterReceiverEditor.cs
-    └── ParameterHubMenuItems.cs
+    └── ParameterSetMenuItems.cs
 ```
 
 ## Installation

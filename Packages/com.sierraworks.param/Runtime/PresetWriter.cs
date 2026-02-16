@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     public class PresetWriter : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     [CreateAssetMenu(fileName = "ParameterSetData", menuName = "SierraWorks/PARAM/Parameter Set Data")]
     public class ParameterSetData : ScriptableObject

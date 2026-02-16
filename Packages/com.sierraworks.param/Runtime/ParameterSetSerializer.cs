@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.IO;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     public class ParameterSetSerializer : MonoBehaviour
     {

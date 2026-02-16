@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.sierraworks.parameter.core": {
-      "version": "file:com.sierraworks.parameter",
+    "com.sierraworks.param": {
+      "version": "file:com.sierraworks.param",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

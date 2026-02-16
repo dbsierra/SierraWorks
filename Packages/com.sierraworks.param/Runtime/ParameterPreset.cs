@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     /// <summary>
     /// A preset stores a name and a collection of default values for parameters.

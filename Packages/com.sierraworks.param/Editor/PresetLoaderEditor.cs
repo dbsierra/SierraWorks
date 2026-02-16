@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 
-namespace SierraWorks.Parameter.Editor
+namespace SierraWorks.PARAM.Editor
 {
     [CustomEditor(typeof(PresetLoader))]
     public class PresetLoaderEditor : UnityEditor.Editor

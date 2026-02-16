@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     /// <summary>
     /// Stores the default value for a parameter within a specific preset.

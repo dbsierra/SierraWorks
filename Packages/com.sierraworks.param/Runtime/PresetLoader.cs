@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     public class PresetLoader : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace SierraWorks.Parameter.Editor
+namespace SierraWorks.PARAM.Editor
 {
-    public static class ParameterHubMenuItems
+    public static class ParameterSetMenuItems
     {
         [MenuItem("GameObject/SierraWorks/PARAM/Parameter Sender", false, 10)]
         private static void CreateParameterSender(MenuCommand menuCommand)

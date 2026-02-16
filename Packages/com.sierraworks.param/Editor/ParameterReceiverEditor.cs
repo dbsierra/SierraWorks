@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace SierraWorks.Parameter.Editor
+namespace SierraWorks.PARAM.Editor
 {
     [CustomEditor(typeof(ParameterReceiver))]
     public class ParameterReceiverEditor : UnityEditor.Editor

@@ -1,12 +1,8 @@
 {
-    "name": "SierraWorks.Parameter.Editor",
-    "rootNamespace": "SierraWorks.Parameter.Editor",
-    "references": [
-        "SierraWorks.Parameter.Runtime"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "name": "SierraWorks.PARAM.Runtime",
+    "rootNamespace": "SierraWorks.PARAM",
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

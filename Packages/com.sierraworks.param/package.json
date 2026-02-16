@@ -1,5 +1,5 @@
 {
-  "name": "com.sierraworks.parameter.core",
+  "name": "com.sierraworks.param",
   "version": "1.0.0",
   "displayName": "[SIERRA][PARAM] Core",
   "description": "A comprehensive parameter management system for Unity with preset support, runtime serialization, and automatic component synchronization.",

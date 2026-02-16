@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Reflection;
 
-namespace SierraWorks.Parameter
+namespace SierraWorks.PARAM
 {
     public class ParameterReceiver : MonoBehaviour
     {

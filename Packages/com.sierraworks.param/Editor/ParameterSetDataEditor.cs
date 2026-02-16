@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SierraWorks.Parameter.Editor
+namespace SierraWorks.PARAM.Editor
 {
     [CustomEditor(typeof(ParameterSetData))]
     public class ParameterSetDataEditor : UnityEditor.Editor
@@ -176,12 +176,12 @@ namespace SierraWorks.Parameter.Editor
 
         private void DrawGroupsPanel()
         {
-            EditorGUILayout.BeginVertical(GUILayout.Width(150));
+            EditorGUILayout.BeginVertical(GUILayout.Width(115));
 
             EditorGUILayout.LabelField("Groups", EditorStyles.boldLabel);
 
             groupScrollPosition = EditorGUILayout.BeginScrollView(groupScrollPosition,
-                EditorStyles.helpBox, GUILayout.Height(600), GUILayout.Width(150));
+                EditorStyles.helpBox, GUILayout.Height(600), GUILayout.Width(115));
 
             var groups = data.groups;
             groupDropTargetIndex = -1;

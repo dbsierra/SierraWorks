@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace SierraWorks.Parameter.Editor
+namespace SierraWorks.PARAM.Editor
 {
     [CustomEditor(typeof(PresetWriter))]
     public class PresetWriterEditor : UnityEditor.Editor
