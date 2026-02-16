@@ -1,0 +1,14 @@
+{
+    "name": "SierraWorks.Parameter.Runtime",
+    "rootNamespace": "SierraWorks.Parameter",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

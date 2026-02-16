@@ -1,0 +1,18 @@
+{
+    "name": "SierraWorks.Parameter.Editor",
+    "rootNamespace": "SierraWorks.Parameter.Editor",
+    "references": [
+        "SierraWorks.Parameter.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
