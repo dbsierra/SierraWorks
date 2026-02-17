@@ -6,7 +6,7 @@ namespace SierraWorks.PARAM
 {
     public class ParameterReceiver : MonoBehaviour
     {
-        [SerializeField] private ParameterSetData parameterHub;
+        [SerializeField] private ParameterSetData parameterSet;
         [SerializeField] private string selectedParameterPath;
         [SerializeField] private GameObject targetObject;
         [SerializeField] private string targetComponentName;
@@ -36,14 +36,14 @@ namespace SierraWorks.PARAM
 
         private void Start()
         {
-            if (parameterHub != null)
+            if (parameterSet != null)
             {
                 CacheReferences();
 
                 // Initialize parameter's current value from the effective default value on first start
-                if (cachedParameter != null && parameterHub.CurrentPreset != null)
+                if (cachedParameter != null && parameterSet.CurrentPreset != null)
                 {
-                    var effectiveDefault = parameterHub.GetEffectiveDefaultValue(cachedParameter, parameterHub.CurrentPreset);
+                    var effectiveDefault = parameterSet.GetEffectiveDefaultValue(cachedParameter, parameterSet.CurrentPreset);
                     if (effectiveDefault != null)
                     {
                         cachedParameter.SetCurrentValue(effectiveDefault.GetValue(cachedParameter.type));
@@ -56,30 +56,30 @@ namespace SierraWorks.PARAM
 
         private void OnEnable()
         {
-            if (parameterHub != null)
+            if (parameterSet != null)
             {
-                parameterHub.OnParameterChanged += OnParameterValueChanged;
+                parameterSet.OnParameterChanged += OnParameterValueChanged;
             }
         }
 
         private void OnDisable()
         {
-            if (parameterHub != null)
+            if (parameterSet != null)
             {
-                parameterHub.OnParameterChanged -= OnParameterValueChanged;
+                parameterSet.OnParameterChanged -= OnParameterValueChanged;
             }
         }
 
         private void CacheReferences()
         {
-            if (parameterHub == null || string.IsNullOrEmpty(selectedParameterPath))
+            if (parameterSet == null || string.IsNullOrEmpty(selectedParameterPath))
             {
                 cachedParameter = null;
                 return;
             }
 
             // With the new architecture, there's only one Parameter instance per parameter
-            cachedParameter = parameterHub.GetParameterByPath(selectedParameterPath);
+            cachedParameter = parameterSet.GetParameterByPath(selectedParameterPath);
 
             if (targetObject != null && !string.IsNullOrEmpty(targetComponentName))
             {
@@ -213,7 +213,7 @@ namespace SierraWorks.PARAM
 #if UNITY_EDITOR
         public void SetParameterHub(ParameterSetData hub)
         {
-            parameterHub = hub;
+            parameterSet = hub;
         }
 
         public void SetSelectedParameter(string path)
@@ -238,7 +238,7 @@ namespace SierraWorks.PARAM
 
         public ParameterSetData GetParameterHub()
         {
-            return parameterHub;
+            return parameterSet;
         }
 
         public string GetSelectedParameterPath()

@@ -899,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f82b12cbcca4c83b095db00b2ff4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SierraWorks.PARAM.Runtime::SierraWorks.PARAM.ParameterReceiver
-  parameterHub: {fileID: 11400000, guid: e61d959c4081f41db8b66e50e3551aff, type: 2}
+  parameterSet: {fileID: 11400000, guid: e61d959c4081f41db8b66e50e3551aff, type: 2}
   selectedParameterPath: 3cd6ec85-252a-40bc-b6d2-9b3857106bf1
   targetObject: {fileID: 93721140}
   targetComponentName: CubeController
@@ -1824,7 +1824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f82b12cbcca4c83b095db00b2ff4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SierraWorks.PARAM.Runtime::SierraWorks.PARAM.ParameterReceiver
-  parameterHub: {fileID: 11400000, guid: e61d959c4081f41db8b66e50e3551aff, type: 2}
+  parameterSet: {fileID: 11400000, guid: e61d959c4081f41db8b66e50e3551aff, type: 2}
   selectedParameterPath: 58257290-c498-4600-8ca3-567452d15842
   targetObject: {fileID: 93721140}
   targetComponentName: CubeController
@@ -2818,7 +2818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f82b12cbcca4c83b095db00b2ff4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SierraWorks.PARAM.Runtime::SierraWorks.PARAM.ParameterReceiver
-  parameterHub: {fileID: 11400000, guid: e61d959c4081f41db8b66e50e3551aff, type: 2}
+  parameterSet: {fileID: 11400000, guid: e61d959c4081f41db8b66e50e3551aff, type: 2}
   selectedParameterPath: bb52f650-c538-46d1-8317-fd256edbcabd
   targetObject: {fileID: 93721140}
   targetComponentName: CubeController

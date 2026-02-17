@@ -7,10 +7,10 @@ using System.Collections.Generic;
 namespace SierraWorks.PARAM.Editor
 {
     [CustomEditor(typeof(ParameterReceiver))]
+    [CanEditMultipleObjects]
     public class ParameterReceiverEditor : UnityEditor.Editor
     {
-        private ParameterReceiver receiver;
-        private SerializedProperty parameterHubProp;
+        private SerializedProperty parameterSetProp;
         private SerializedProperty selectedParameterPathProp;
         private SerializedProperty targetObjectProp;
         private SerializedProperty targetComponentNameProp;
@@ -25,8 +25,7 @@ namespace SierraWorks.PARAM.Editor
 
         private void OnEnable()
         {
-            receiver = (ParameterReceiver)target;
-            parameterHubProp = serializedObject.FindProperty("parameterHub");
+            parameterSetProp = serializedObject.FindProperty("parameterSet");
             selectedParameterPathProp = serializedObject.FindProperty("selectedParameterPath");
             targetObjectProp = serializedObject.FindProperty("targetObject");
             targetComponentNameProp = serializedObject.FindProperty("targetComponentName");
@@ -44,18 +43,28 @@ namespace SierraWorks.PARAM.Editor
         {
             serializedObject.Update();
 
+            bool isMultiEdit = targets.Length > 1;
+
             // Draw the script field
             GUI.enabled = false;
             EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((MonoBehaviour)target), typeof(MonoScript), false);
             GUI.enabled = true;
 
-            EditorGUILayout.PropertyField(parameterHubProp, new GUIContent("Parameter Hub"));
+            EditorGUILayout.PropertyField(parameterSetProp, new GUIContent("Parameter Set"));
 
-            var hub = receiver.GetParameterHub();
+            // Check if all targets share the same hub
+            ParameterSetData sharedHub = GetSharedHub();
 
-            if (hub == null)
+            if (sharedHub == null)
             {
-                EditorGUILayout.HelpBox("Please assign a Parameter Hub Data asset.", MessageType.Warning);
+                if (parameterSetProp.hasMultipleDifferentValues)
+                {
+                    EditorGUILayout.HelpBox("Selected objects have different Parameter Set assets. Parameter selection is not available for mixed hubs.", MessageType.Warning);
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox("Please assign a Parameter Set Data asset.", MessageType.Warning);
+                }
                 serializedObject.ApplyModifiedProperties();
                 return;
             }
@@ -63,169 +72,353 @@ namespace SierraWorks.PARAM.Editor
             EditorGUILayout.Space(5);
 
             // Parameter selection dropdown
-            var allParameterPaths = hub.GetAllParameterDisplayNames();
+            var allParameterPaths = sharedHub.GetAllParameterDisplayNames();
 
             if (allParameterPaths.Count == 0)
             {
-                EditorGUILayout.HelpBox("No parameters available in the Parameter Hub.", MessageType.Info);
+                EditorGUILayout.HelpBox("No parameters available in the Parameter Set.", MessageType.Info);
                 serializedObject.ApplyModifiedProperties();
                 return;
             }
 
-            string currentPath = receiver.GetSelectedParameterPath();
+            DrawParameterDropdown(sharedHub, allParameterPaths, isMultiEdit);
 
-            // Try to find current parameter using multiple strategies (ID, display path, internal path)
-            var currentParam = hub.GetParameterByPath(currentPath);
-            string currentDisplayPath = currentParam != null ?
-                (currentParam.groupName == "Default" ? currentParam.displayName : $"{currentParam.groupName}/{currentParam.displayName}") :
-                currentPath;
+            // Resolve the current parameter for display purposes (use first target's parameter)
+            Parameter currentParam = GetSharedParameter(sharedHub);
 
-            int currentIndex = allParameterPaths.IndexOf(currentDisplayPath);
-            if (currentIndex < 0) currentIndex = 0;
-
-            int newIndex = EditorGUILayout.Popup("Parameter", currentIndex, allParameterPaths.ToArray());
-
-            if (newIndex != currentIndex || string.IsNullOrEmpty(currentPath))
+            // Display current value of the selected parameter (read-only, single-select only)
+            if (currentParam != null && !isMultiEdit)
             {
-                // Get the parameter from the display path and store its unique ID
-                var selectedParam = hub.GetParameterByDisplayPath(allParameterPaths[newIndex]);
-                if (selectedParam != null)
-                {
-                    receiver.SetSelectedParameter(selectedParam.ID);
-                    EditorUtility.SetDirty(receiver);
-                }
+                DrawCurrentValue(currentParam);
             }
-
-            // Display current value of the selected parameter (read-only)
-            if (currentParam != null)
+            else if (currentParam != null && isMultiEdit && !selectedParameterPathProp.hasMultipleDifferentValues)
             {
-                EditorGUILayout.Space(5);
-                GUI.enabled = false;
-
-                object currentValue = currentParam.GetCurrentValue();
-
-                switch (currentParam.type)
-                {
-                    case ParameterType.Float:
-                        EditorGUILayout.FloatField("Current Value", (float)currentValue);
-                        break;
-                    case ParameterType.Int:
-                        EditorGUILayout.IntField("Current Value", (int)currentValue);
-                        break;
-                    case ParameterType.Bool:
-                        EditorGUILayout.Toggle("Current Value", (bool)currentValue);
-                        break;
-                    case ParameterType.String:
-                        EditorGUILayout.TextField("Current Value", (string)currentValue);
-                        break;
-                    case ParameterType.Vector2:
-                        EditorGUILayout.Vector2Field("Current Value", (Vector2)currentValue);
-                        break;
-                    case ParameterType.Vector3:
-                        EditorGUILayout.Vector3Field("Current Value", (Vector3)currentValue);
-                        break;
-                    case ParameterType.Color:
-                        EditorGUILayout.ColorField("Current Value", (Color)currentValue);
-                        break;
-                }
-
-                GUI.enabled = true;
+                // All targets share the same parameter, show the value
+                DrawCurrentValue(currentParam);
             }
 
             EditorGUILayout.Space(10);
             EditorGUILayout.LabelField("Target Settings", EditorStyles.boldLabel);
 
-            // Target Object
-            GameObject previousTarget = receiver.GetTargetObject();
-            EditorGUILayout.PropertyField(targetObjectProp, new GUIContent("Target GameObject"));
-            GameObject newTarget = targetObjectProp.objectReferenceValue as GameObject;
+            DrawTargetObjectField(isMultiEdit);
 
-            if (newTarget != previousTarget)
-            {
-                receiver.SetTargetObject(newTarget);
-                receiver.SetTargetComponent("");
-                receiver.SetTargetField("");
-                EditorUtility.SetDirty(receiver);
-            }
-
-            if (newTarget != null)
-            {
-                EditorGUILayout.Space(5);
-
-                // Component selection
-                Component[] components = newTarget.GetComponents<Component>();
-                List<string> componentNames = new List<string>();
-                foreach (var comp in components)
-                {
-                    if (comp != null)
-                    {
-                        componentNames.Add(comp.GetType().Name);
-                    }
-                }
-
-                if (componentNames.Count > 0)
-                {
-                    string currentComponentName = receiver.GetTargetComponentName();
-                    int componentIndex = componentNames.IndexOf(currentComponentName);
-                    if (componentIndex < 0) componentIndex = 0;
-
-                    int newComponentIndex = EditorGUILayout.Popup("Component", componentIndex, componentNames.ToArray());
-
-                    if (newComponentIndex != componentIndex || string.IsNullOrEmpty(currentComponentName))
-                    {
-                        receiver.SetTargetComponent(componentNames[newComponentIndex]);
-                        receiver.SetTargetField("");
-                        EditorUtility.SetDirty(receiver);
-                    }
-
-                    // Field/Property selection
-                    if (!string.IsNullOrEmpty(receiver.GetTargetComponentName()))
-                    {
-                        Component selectedComponent = components.FirstOrDefault(c => c != null && c.GetType().Name == receiver.GetTargetComponentName());
-
-                        if (selectedComponent != null)
-                        {
-                            EditorGUILayout.Space(5);
-
-                            string selectedPath = receiver.GetSelectedParameterPath();
-                            var parameter = hub.GetParameterByPath(selectedPath);
-
-                            var compatibleMembers = GetCompatibleMembers(selectedComponent, parameter);
-
-                            if (compatibleMembers.Count > 0)
-                            {
-                                string currentFieldName = receiver.GetTargetFieldName();
-                                int fieldIndex = compatibleMembers.IndexOf(currentFieldName);
-
-                                // If the current field is not in the compatible list, auto-select the first one
-                                if (fieldIndex < 0)
-                                {
-                                    fieldIndex = 0;
-                                    receiver.SetTargetField(compatibleMembers[fieldIndex]);
-                                    EditorUtility.SetDirty(receiver);
-                                }
-
-                                int newFieldIndex = EditorGUILayout.Popup("Field/Property", fieldIndex, compatibleMembers.ToArray());
-
-                                if (newFieldIndex != fieldIndex)
-                                {
-                                    receiver.SetTargetField(compatibleMembers[newFieldIndex]);
-                                    EditorUtility.SetDirty(receiver);
-                                }
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("No compatible fields or properties found on this component.", MessageType.Info);
-                            }
-                        }
-                    }
-                }
-            }
+            DrawComponentAndFieldDropdowns(sharedHub, isMultiEdit);
 
             EditorGUILayout.Space(10);
             EditorGUILayout.LabelField("Events", EditorStyles.boldLabel);
 
-            // Show only the typed event that matches the selected parameter's type
+            DrawEventsSection(sharedHub);
+
+            EditorGUILayout.Space(10);
+
+            if (GUILayout.Button("Manual Update"))
+            {
+                foreach (var t in targets)
+                {
+                    var recv = (ParameterReceiver)t;
+                    recv.ManualUpdate();
+                }
+            }
+
+            EditorGUILayout.HelpBox("This component automatically updates the target field/property when the parameter value changes.", MessageType.Info);
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        /// <summary>
+        /// Returns the shared ParameterSetData if all targets use the same hub, or null if they differ or none is assigned.
+        /// </summary>
+        private ParameterSetData GetSharedHub()
+        {
+            if (parameterSetProp.hasMultipleDifferentValues)
+                return null;
+
+            return ((ParameterReceiver)target).GetParameterHub();
+        }
+
+        /// <summary>
+        /// Returns the Parameter if all targets share the same selected parameter path, or null if they differ.
+        /// </summary>
+        private Parameter GetSharedParameter(ParameterSetData hub)
+        {
+            if (hub == null) return null;
+            if (selectedParameterPathProp.hasMultipleDifferentValues) return null;
+
+            string currentPath = selectedParameterPathProp.stringValue;
+            if (string.IsNullOrEmpty(currentPath)) return null;
+
+            return hub.GetParameterByPath(currentPath);
+        }
+
+        private void DrawParameterDropdown(ParameterSetData hub, List<string> allParameterPaths, bool isMultiEdit)
+        {
+            if (selectedParameterPathProp.hasMultipleDifferentValues)
+            {
+                // Show mixed value indicator with dropdown
+                EditorGUI.showMixedValue = true;
+                int newIndex = EditorGUILayout.Popup("Parameter", -1, allParameterPaths.ToArray());
+                EditorGUI.showMixedValue = false;
+
+                if (newIndex >= 0)
+                {
+                    // User selected a value, apply to all targets
+                    var selectedParam = hub.GetParameterByDisplayPath(allParameterPaths[newIndex]);
+                    if (selectedParam != null)
+                    {
+                        foreach (var t in targets)
+                        {
+                            var recv = (ParameterReceiver)t;
+                            recv.SetSelectedParameter(selectedParam.ID);
+                            EditorUtility.SetDirty(recv);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                string currentPath = selectedParameterPathProp.stringValue;
+
+                var currentParam = hub.GetParameterByPath(currentPath);
+                string currentDisplayPath = currentParam != null ?
+                    (currentParam.groupName == "Default" ? currentParam.displayName : $"{currentParam.groupName}/{currentParam.displayName}") :
+                    currentPath;
+
+                int currentIndex = allParameterPaths.IndexOf(currentDisplayPath);
+                if (currentIndex < 0) currentIndex = 0;
+
+                int newIndex = EditorGUILayout.Popup("Parameter", currentIndex, allParameterPaths.ToArray());
+
+                if (newIndex != currentIndex || string.IsNullOrEmpty(currentPath))
+                {
+                    var selectedParam = hub.GetParameterByDisplayPath(allParameterPaths[newIndex]);
+                    if (selectedParam != null)
+                    {
+                        foreach (var t in targets)
+                        {
+                            var recv = (ParameterReceiver)t;
+                            recv.SetSelectedParameter(selectedParam.ID);
+                            EditorUtility.SetDirty(recv);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DrawCurrentValue(Parameter currentParam)
+        {
+            EditorGUILayout.Space(5);
+            GUI.enabled = false;
+
+            object currentValue = currentParam.GetCurrentValue();
+
+            switch (currentParam.type)
+            {
+                case ParameterType.Float:
+                    EditorGUILayout.FloatField("Current Value", (float)currentValue);
+                    break;
+                case ParameterType.Int:
+                    EditorGUILayout.IntField("Current Value", (int)currentValue);
+                    break;
+                case ParameterType.Bool:
+                    EditorGUILayout.Toggle("Current Value", (bool)currentValue);
+                    break;
+                case ParameterType.String:
+                    EditorGUILayout.TextField("Current Value", (string)currentValue);
+                    break;
+                case ParameterType.Vector2:
+                    EditorGUILayout.Vector2Field("Current Value", (Vector2)currentValue);
+                    break;
+                case ParameterType.Vector3:
+                    EditorGUILayout.Vector3Field("Current Value", (Vector3)currentValue);
+                    break;
+                case ParameterType.Color:
+                    EditorGUILayout.ColorField("Current Value", (Color)currentValue);
+                    break;
+            }
+
+            GUI.enabled = true;
+        }
+
+        private void DrawTargetObjectField(bool isMultiEdit)
+        {
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(targetObjectProp, new GUIContent("Target GameObject"));
+            if (EditorGUI.EndChangeCheck())
+            {
+                // Target object changed — clear component and field for all targets
+                serializedObject.ApplyModifiedProperties();
+                foreach (var t in targets)
+                {
+                    var recv = (ParameterReceiver)t;
+                    recv.SetTargetComponent("");
+                    recv.SetTargetField("");
+                    EditorUtility.SetDirty(recv);
+                }
+                serializedObject.Update();
+            }
+        }
+
+        private void DrawComponentAndFieldDropdowns(ParameterSetData hub, bool isMultiEdit)
+        {
+            // If target objects differ across selections, we can't show component/field dropdowns meaningfully
+            if (targetObjectProp.hasMultipleDifferentValues)
+            {
+                EditorGUILayout.HelpBox("Selected objects have different Target GameObjects. Component and field selection is not available.", MessageType.Info);
+                return;
+            }
+
+            GameObject targetObj = targetObjectProp.objectReferenceValue as GameObject;
+            if (targetObj == null) return;
+
+            EditorGUILayout.Space(5);
+
+            // Component selection
+            Component[] components = targetObj.GetComponents<Component>();
+            List<string> componentNames = new List<string>();
+            foreach (var comp in components)
+            {
+                if (comp != null)
+                {
+                    componentNames.Add(comp.GetType().Name);
+                }
+            }
+
+            if (componentNames.Count == 0) return;
+
+            // Component dropdown
+            if (targetComponentNameProp.hasMultipleDifferentValues)
+            {
+                EditorGUI.showMixedValue = true;
+                int newComponentIndex = EditorGUILayout.Popup("Component", -1, componentNames.ToArray());
+                EditorGUI.showMixedValue = false;
+
+                if (newComponentIndex >= 0)
+                {
+                    foreach (var t in targets)
+                    {
+                        var recv = (ParameterReceiver)t;
+                        recv.SetTargetComponent(componentNames[newComponentIndex]);
+                        recv.SetTargetField("");
+                        EditorUtility.SetDirty(recv);
+                    }
+                    serializedObject.Update();
+                }
+            }
+            else
+            {
+                string currentComponentName = targetComponentNameProp.stringValue;
+                int componentIndex = componentNames.IndexOf(currentComponentName);
+                if (componentIndex < 0) componentIndex = 0;
+
+                int newComponentIndex = EditorGUILayout.Popup("Component", componentIndex, componentNames.ToArray());
+
+                if (newComponentIndex != componentIndex || string.IsNullOrEmpty(currentComponentName))
+                {
+                    foreach (var t in targets)
+                    {
+                        var recv = (ParameterReceiver)t;
+                        recv.SetTargetComponent(componentNames[newComponentIndex]);
+                        recv.SetTargetField("");
+                        EditorUtility.SetDirty(recv);
+                    }
+                    serializedObject.Update();
+                }
+            }
+
+            // Field/Property selection
+            string resolvedComponentName = targetComponentNameProp.hasMultipleDifferentValues ? null : targetComponentNameProp.stringValue;
+            if (string.IsNullOrEmpty(resolvedComponentName)) return;
+
+            Component selectedComponent = components.FirstOrDefault(c => c != null && c.GetType().Name == resolvedComponentName);
+            if (selectedComponent == null) return;
+
+            EditorGUILayout.Space(5);
+
+            // Resolve the parameter for compatible member filtering
+            Parameter parameter = null;
+            if (!selectedParameterPathProp.hasMultipleDifferentValues)
+            {
+                string selectedPath = selectedParameterPathProp.stringValue;
+                parameter = hub.GetParameterByPath(selectedPath);
+            }
+
+            var compatibleMembers = GetCompatibleMembers(selectedComponent, parameter);
+
+            if (compatibleMembers.Count == 0)
+            {
+                EditorGUILayout.HelpBox("No compatible fields or properties found on this component.", MessageType.Info);
+                return;
+            }
+
+            // Field dropdown
+            if (targetFieldNameProp.hasMultipleDifferentValues)
+            {
+                EditorGUI.showMixedValue = true;
+                int newFieldIndex = EditorGUILayout.Popup("Field/Property", -1, compatibleMembers.ToArray());
+                EditorGUI.showMixedValue = false;
+
+                if (newFieldIndex >= 0)
+                {
+                    foreach (var t in targets)
+                    {
+                        var recv = (ParameterReceiver)t;
+                        recv.SetTargetField(compatibleMembers[newFieldIndex]);
+                        EditorUtility.SetDirty(recv);
+                    }
+                    serializedObject.Update();
+                }
+            }
+            else
+            {
+                string currentFieldName = targetFieldNameProp.stringValue;
+                int fieldIndex = compatibleMembers.IndexOf(currentFieldName);
+
+                // If the current field is not in the compatible list, auto-select the first one
+                if (fieldIndex < 0)
+                {
+                    fieldIndex = 0;
+                    foreach (var t in targets)
+                    {
+                        var recv = (ParameterReceiver)t;
+                        recv.SetTargetField(compatibleMembers[fieldIndex]);
+                        EditorUtility.SetDirty(recv);
+                    }
+                    serializedObject.Update();
+                }
+
+                int newFieldIndex = EditorGUILayout.Popup("Field/Property", fieldIndex, compatibleMembers.ToArray());
+
+                if (newFieldIndex != fieldIndex)
+                {
+                    foreach (var t in targets)
+                    {
+                        var recv = (ParameterReceiver)t;
+                        recv.SetTargetField(compatibleMembers[newFieldIndex]);
+                        EditorUtility.SetDirty(recv);
+                    }
+                    serializedObject.Update();
+                }
+            }
+        }
+
+        private void DrawEventsSection(ParameterSetData hub)
+        {
+            // If parameter paths differ, we can't determine a single type — show all events
+            if (selectedParameterPathProp.hasMultipleDifferentValues)
+            {
+                EditorGUILayout.HelpBox("Selected objects have different parameters. Showing all event types.", MessageType.Info);
+                EditorGUILayout.PropertyField(onFloatChangedProp, new GUIContent("On Value Changed (Float)"));
+                EditorGUILayout.PropertyField(onIntChangedProp, new GUIContent("On Value Changed (Int)"));
+                EditorGUILayout.PropertyField(onBoolChangedProp, new GUIContent("On Value Changed (Bool)"));
+                EditorGUILayout.PropertyField(onStringChangedProp, new GUIContent("On Value Changed (String)"));
+                EditorGUILayout.PropertyField(onVector2ChangedProp, new GUIContent("On Value Changed (Vector2)"));
+                EditorGUILayout.PropertyField(onVector3ChangedProp, new GUIContent("On Value Changed (Vector3)"));
+                EditorGUILayout.PropertyField(onColorChangedProp, new GUIContent("On Value Changed (Color)"));
+                return;
+            }
+
+            Parameter currentParam = GetSharedParameter(hub);
+
             if (currentParam != null)
             {
                 switch (currentParam.type)
@@ -257,17 +450,6 @@ namespace SierraWorks.PARAM.Editor
             {
                 EditorGUILayout.HelpBox("Select a parameter to configure the output event.", MessageType.Info);
             }
-
-            EditorGUILayout.Space(10);
-
-            if (GUILayout.Button("Manual Update"))
-            {
-                receiver.ManualUpdate();
-            }
-
-            EditorGUILayout.HelpBox("This component automatically updates the target field/property when the parameter value changes.", MessageType.Info);
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         private List<string> GetCompatibleMembers(Component component, Parameter parameter)
