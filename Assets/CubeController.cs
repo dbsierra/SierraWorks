@@ -4,7 +4,7 @@ namespace SierraWorks.Param.Samples
 {
     public class CubeController : MonoBehaviour
     {
-        [SerializeField] private Transform transform;
+        [SerializeField] private Transform rotationTransform;
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private float yaw = 0f;
         [SerializeField] private float saturation = 1f;
@@ -40,7 +40,7 @@ namespace SierraWorks.Param.Samples
         // Update is called once per frame
         void Update()
         {
-            transform.rotation = Quaternion.AngleAxis(yaw, Vector3.up);
+            rotationTransform.rotation = Quaternion.AngleAxis(yaw, Vector3.up);
 
             Color cubeColor = Color.HSVToRGB(hue, saturation, 1f);
 

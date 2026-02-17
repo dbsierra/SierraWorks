@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91dc05bd6d6648e2a8b386932e423c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SierraWorks.Param.Samples.CubeController
-  transform: {fileID: 93721142}
+  rotationTransform: {fileID: 93721142}
   meshRenderer: {fileID: 1319637412}
   yaw: 0
   saturation: 1
@@ -920,7 +920,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 847513987}
-        m_TargetAssemblyTypeName: FloatToText, Assembly-CSharp
+        m_TargetAssemblyTypeName: SierraWorks.Param.Samples.FloatToText, Assembly-CSharp
         m_MethodName: set_Value
         m_Mode: 0
         m_Arguments:
@@ -1845,7 +1845,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1360792326}
-        m_TargetAssemblyTypeName: FloatToText, Assembly-CSharp
+        m_TargetAssemblyTypeName: SierraWorks.Param.Samples.FloatToText, Assembly-CSharp
         m_MethodName: set_Value
         m_Mode: 0
         m_Arguments:
@@ -2693,6 +2693,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5180410662025774758, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+      propertyPath: m_text
+      value: 0.00
+      objectReference: {fileID: 0}
     - target: {fileID: 6406537508546731098, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2743,6 +2747,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7779517246830133255, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7961434394374088229, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+      propertyPath: value
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2831,7 +2839,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1606514075}
-        m_TargetAssemblyTypeName: FloatToText, Assembly-CSharp
+        m_TargetAssemblyTypeName: SierraWorks.Param.Samples.FloatToText, Assembly-CSharp
         m_MethodName: set_Value
         m_Mode: 0
         m_Arguments:

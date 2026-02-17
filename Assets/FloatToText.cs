@@ -14,7 +14,10 @@ namespace SierraWorks.Param.Samples
             set
             {
                 this.value = value;
-                text.text = value.ToString("0.00");
+                if (text != null)
+                {
+                    text.text = value.ToString("0.00");
+                }
             }
         }
 
