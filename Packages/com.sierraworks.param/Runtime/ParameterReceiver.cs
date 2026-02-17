@@ -12,10 +12,21 @@ namespace SierraWorks.PARAM
         [SerializeField] private string targetComponentName;
         [SerializeField] private string targetFieldName;
 
-        [System.Serializable]
-        public class ParameterChangedEvent : UnityEvent<object> { }
+        [System.Serializable] public class FloatEvent : UnityEvent<float> { }
+        [System.Serializable] public class IntEvent : UnityEvent<int> { }
+        [System.Serializable] public class BoolEvent : UnityEvent<bool> { }
+        [System.Serializable] public class StringEvent : UnityEvent<string> { }
+        [System.Serializable] public class Vector2Event : UnityEvent<Vector2> { }
+        [System.Serializable] public class Vector3Event : UnityEvent<Vector3> { }
+        [System.Serializable] public class ColorEvent : UnityEvent<Color> { }
 
-        public ParameterChangedEvent onParameterChanged;
+        public FloatEvent onFloatChanged;
+        public IntEvent onIntChanged;
+        public BoolEvent onBoolChanged;
+        public StringEvent onStringChanged;
+        public Vector2Event onVector2Changed;
+        public Vector3Event onVector3Changed;
+        public ColorEvent onColorChanged;
 
         private Parameter cachedParameter;
         private Component targetComponent;
@@ -143,8 +154,34 @@ namespace SierraWorks.PARAM
                 }
             }
 
-            // Invoke UnityEvent
-            onParameterChanged?.Invoke(value);
+            // Invoke typed UnityEvent
+            if (cachedParameter != null && value != null)
+            {
+                switch (cachedParameter.type)
+                {
+                    case ParameterType.Float:
+                        onFloatChanged?.Invoke((float)value);
+                        break;
+                    case ParameterType.Int:
+                        onIntChanged?.Invoke((int)value);
+                        break;
+                    case ParameterType.Bool:
+                        onBoolChanged?.Invoke((bool)value);
+                        break;
+                    case ParameterType.String:
+                        onStringChanged?.Invoke((string)value);
+                        break;
+                    case ParameterType.Vector2:
+                        onVector2Changed?.Invoke((Vector2)value);
+                        break;
+                    case ParameterType.Vector3:
+                        onVector3Changed?.Invoke((Vector3)value);
+                        break;
+                    case ParameterType.Color:
+                        onColorChanged?.Invoke((Color)value);
+                        break;
+                }
+            }
         }
 
         private object ConvertValue(object value, System.Type targetType)

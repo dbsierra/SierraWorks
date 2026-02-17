@@ -25,6 +25,11 @@ MonoBehaviour:
       displayName: Saturation
       groupName: CubeMaterial
       type: 0
+    - id: 0bd4b9ac-62d7-4803-ab80-4fa29d15ee47
+      name: NewParameter_2
+      displayName: New Parameter 2
+      groupName: CubeMaterial
+      type: 6
   - groupName: CubeTransform
     parameters:
     - id: 58257290-c498-4600-8ca3-567452d15842
@@ -62,6 +67,15 @@ MonoBehaviour:
       vector2Value: {x: 0, y: 0}
       vector3Value: {x: 0, y: 0, z: 0}
       colorValue: {r: 0, g: 0, b: 0, a: 0}
+    - parameterId: 0bd4b9ac-62d7-4803-ab80-4fa29d15ee47
+      isOverridden: 1
+      floatValue: 0
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
   - presetName: Red
     defaultValues:
     - parameterId: bb52f650-c538-46d1-8317-fd256edbcabd
@@ -85,6 +99,15 @@ MonoBehaviour:
     - parameterId: 3cd6ec85-252a-40bc-b6d2-9b3857106bf1
       isOverridden: 1
       floatValue: 1
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+    - parameterId: 0bd4b9ac-62d7-4803-ab80-4fa29d15ee47
+      isOverridden: 0
+      floatValue: 0
       intValue: 0
       boolValue: 0
       stringValue: 
@@ -120,4 +143,13 @@ MonoBehaviour:
       vector2Value: {x: 0, y: 0}
       vector3Value: {x: 0, y: 0, z: 0}
       colorValue: {r: 0, g: 0, b: 0, a: 0}
-  currentPresetIndex: 2
+    - parameterId: 0bd4b9ac-62d7-4803-ab80-4fa29d15ee47
+      isOverridden: 0
+      floatValue: 0
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+  currentPresetIndex: 1

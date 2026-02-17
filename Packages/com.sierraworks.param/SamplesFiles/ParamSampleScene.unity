@@ -904,7 +904,49 @@ MonoBehaviour:
   targetObject: {fileID: 93721140}
   targetComponentName: CubeController
   targetFieldName: Saturation
-  onParameterChanged:
+  onFloatChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1921815188}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+        m_MethodName: SetValueWithoutNotify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 847513987}
+        m_TargetAssemblyTypeName: FloatToText, Assembly-CSharp
+        m_MethodName: set_Value
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onIntChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onBoolChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onStringChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onVector2Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  onVector3Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  onColorChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &641684664
@@ -1368,6 +1410,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3727970427036713609, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
   m_PrefabInstance: {fileID: 847513985}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &847513987 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7961434394374088229, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+  m_PrefabInstance: {fileID: 847513985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a499f39eaa14685859de699b58a337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatToText
 --- !u!1 &912549308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,6 +1769,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050858546}
   m_CullTransparentMesh: 1
+--- !u!114 &1097622864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3950882955667363138, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+  m_PrefabInstance: {fileID: 1360792324}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &1106386812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,7 +1829,49 @@ MonoBehaviour:
   targetObject: {fileID: 93721140}
   targetComponentName: CubeController
   targetFieldName: Yaw
-  onParameterChanged:
+  onFloatChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1097622864}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+        m_MethodName: SetValueWithoutNotify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1360792326}
+        m_TargetAssemblyTypeName: FloatToText, Assembly-CSharp
+        m_MethodName: set_Value
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onIntChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onBoolChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onStringChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onVector2Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  onVector3Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  onColorChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1221428819
@@ -2143,11 +2249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3950882955667363138, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_Value
-      value: 42
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3950882955667363138, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_MaxValue
-      value: 180
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 4076648326766200525, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2164,6 +2270,10 @@ PrefabInstance:
     - target: {fileID: 5044037354130132006, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_Name
       value: Slider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180410662025774758, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+      propertyPath: m_text
+      value: 0.00
       objectReference: {fileID: 0}
     - target: {fileID: 6406537508546731098, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2217,6 +2327,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7961434394374088229, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+      propertyPath: value
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2227,6 +2341,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3727970427036713609, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
   m_PrefabInstance: {fileID: 1360792324}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1360792326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7961434394374088229, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+  m_PrefabInstance: {fileID: 1360792324}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a499f39eaa14685859de699b58a337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatToText
 --- !u!1 &1420745595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2441,6 +2566,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &1546296964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3950882955667363138, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+  m_PrefabInstance: {fileID: 1606514073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &1606514073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2619,6 +2755,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3727970427036713609, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
   m_PrefabInstance: {fileID: 1606514073}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1606514075 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7961434394374088229, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+  m_PrefabInstance: {fileID: 1606514073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a499f39eaa14685859de699b58a337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatToText
 --- !u!1 &1887927875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,9 +2815,62 @@ MonoBehaviour:
   targetObject: {fileID: 93721140}
   targetComponentName: CubeController
   targetFieldName: Hue
-  onParameterChanged:
+  onFloatChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1546296964}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+        m_MethodName: SetValueWithoutNotify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1606514075}
+        m_TargetAssemblyTypeName: FloatToText, Assembly-CSharp
+        m_MethodName: set_Value
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onIntChanged:
     m_PersistentCalls:
       m_Calls: []
+  onBoolChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onStringChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onVector2Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  onVector3Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  onColorChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1921815188 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3950882955667363138, guid: 494486eec7c3e421f9a968feec05555f, type: 3}
+  m_PrefabInstance: {fileID: 847513985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &2000532186
 GameObject:
   m_ObjectHideFlags: 0

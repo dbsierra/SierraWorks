@@ -15,7 +15,13 @@ namespace SierraWorks.PARAM.Editor
         private SerializedProperty targetObjectProp;
         private SerializedProperty targetComponentNameProp;
         private SerializedProperty targetFieldNameProp;
-        private SerializedProperty onParameterChangedProp;
+        private SerializedProperty onFloatChangedProp;
+        private SerializedProperty onIntChangedProp;
+        private SerializedProperty onBoolChangedProp;
+        private SerializedProperty onStringChangedProp;
+        private SerializedProperty onVector2ChangedProp;
+        private SerializedProperty onVector3ChangedProp;
+        private SerializedProperty onColorChangedProp;
 
         private void OnEnable()
         {
@@ -25,7 +31,13 @@ namespace SierraWorks.PARAM.Editor
             targetObjectProp = serializedObject.FindProperty("targetObject");
             targetComponentNameProp = serializedObject.FindProperty("targetComponentName");
             targetFieldNameProp = serializedObject.FindProperty("targetFieldName");
-            onParameterChangedProp = serializedObject.FindProperty("onParameterChanged");
+            onFloatChangedProp = serializedObject.FindProperty("onFloatChanged");
+            onIntChangedProp = serializedObject.FindProperty("onIntChanged");
+            onBoolChangedProp = serializedObject.FindProperty("onBoolChanged");
+            onStringChangedProp = serializedObject.FindProperty("onStringChanged");
+            onVector2ChangedProp = serializedObject.FindProperty("onVector2Changed");
+            onVector3ChangedProp = serializedObject.FindProperty("onVector3Changed");
+            onColorChangedProp = serializedObject.FindProperty("onColorChanged");
         }
 
         public override void OnInspectorGUI()
@@ -212,7 +224,39 @@ namespace SierraWorks.PARAM.Editor
 
             EditorGUILayout.Space(10);
             EditorGUILayout.LabelField("Events", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(onParameterChangedProp);
+
+            // Show only the typed event that matches the selected parameter's type
+            if (currentParam != null)
+            {
+                switch (currentParam.type)
+                {
+                    case ParameterType.Float:
+                        EditorGUILayout.PropertyField(onFloatChangedProp, new GUIContent("On Value Changed (Float)"));
+                        break;
+                    case ParameterType.Int:
+                        EditorGUILayout.PropertyField(onIntChangedProp, new GUIContent("On Value Changed (Int)"));
+                        break;
+                    case ParameterType.Bool:
+                        EditorGUILayout.PropertyField(onBoolChangedProp, new GUIContent("On Value Changed (Bool)"));
+                        break;
+                    case ParameterType.String:
+                        EditorGUILayout.PropertyField(onStringChangedProp, new GUIContent("On Value Changed (String)"));
+                        break;
+                    case ParameterType.Vector2:
+                        EditorGUILayout.PropertyField(onVector2ChangedProp, new GUIContent("On Value Changed (Vector2)"));
+                        break;
+                    case ParameterType.Vector3:
+                        EditorGUILayout.PropertyField(onVector3ChangedProp, new GUIContent("On Value Changed (Vector3)"));
+                        break;
+                    case ParameterType.Color:
+                        EditorGUILayout.PropertyField(onColorChangedProp, new GUIContent("On Value Changed (Color)"));
+                        break;
+                }
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("Select a parameter to configure the output event.", MessageType.Info);
+            }
 
             EditorGUILayout.Space(10);
 
