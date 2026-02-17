@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace SierraWorks.Param.Samples
+namespace SierraWorks.PARAM.Samples
 {
     public class FloatToText : MonoBehaviour
     {
