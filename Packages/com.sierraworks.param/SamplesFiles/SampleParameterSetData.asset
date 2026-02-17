@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d04910649e14c2988211b9c1c3d778, type: 3}
+  m_Name: SampleParameterSetData
+  m_EditorClassIdentifier: SierraWorks.Parameter.Runtime::SierraWorks.Parameter.ParameterSetData
+  groups:
+  - groupName: CubeMaterial
+    parameters:
+    - id: bb52f650-c538-46d1-8317-fd256edbcabd
+      name: hue
+      displayName: Hue
+      groupName: CubeMaterial
+      type: 0
+    - id: 3cd6ec85-252a-40bc-b6d2-9b3857106bf1
+      name: saturation
+      displayName: Saturation
+      groupName: CubeMaterial
+      type: 0
+  - groupName: CubeTransform
+    parameters:
+    - id: 58257290-c498-4600-8ca3-567452d15842
+      name: yaw
+      displayName: Yaw
+      groupName: CubeTransform
+      type: 0
+  presets:
+  - presetName: Default
+    defaultValues:
+    - parameterId: bb52f650-c538-46d1-8317-fd256edbcabd
+      isOverridden: 1
+      floatValue: 0
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+    - parameterId: 58257290-c498-4600-8ca3-567452d15842
+      isOverridden: 1
+      floatValue: 42
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+    - parameterId: 3cd6ec85-252a-40bc-b6d2-9b3857106bf1
+      isOverridden: 1
+      floatValue: 0
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+  currentPresetIndex: 0
