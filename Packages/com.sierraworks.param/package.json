@@ -1,7 +1,7 @@
 {
   "name": "com.sierraworks.param",
   "version": "1.0.0",
-  "displayName": "[SIERRA] PARAM Core",
+  "displayName": "[SierraWorks] Parameter Toolkit",
   "description": "A comprehensive parameter management system for Unity with preset support, runtime serialization, and automatic component synchronization.",
   "unity": "2021.3",
   "keywords": [
